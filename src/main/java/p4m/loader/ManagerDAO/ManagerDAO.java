@@ -28,24 +28,17 @@ public abstract class ManagerDAO {
     protected String object_id = "";
     Transaction tr;
 
-    /*public ManagerDAO()
-    {
-        Configuration cfg = new Configuration();
-        cfg.addAnnotatedClass(D2Hero.class);
-        cfg.addAnnotatedClass(D2User.class);
-        cfg.addAnnotatedClass(D2Match.class);
-        cfg.addAnnotatedClass(D2StatsDaily.class);
-        cfg.addAnnotatedClass(D2UserDaily.class);
-        factory = cfg.configure().buildSessionFactory();
-    }*/
-
     public void saveOrUpdate(Object obj) {
-        Sess = factory.openSession();
-        tr = Sess.beginTransaction();
-        Sess.merge(obj);
-        tr.commit();
-        Sess.flush();
-        Sess.close();
+        if (!isReadOnly(obj)) {
+            Sess = factory.openSession();
+            tr = Sess.beginTransaction();
+            Sess.merge(obj);
+            tr.commit();
+            Sess.flush();
+            Sess.close();
+        }
+        else
+            System.err.println("Is Private: "+ obj.toString());
     }
 
     public void saveOrUpdateArray() throws Exception {
@@ -87,6 +80,23 @@ public abstract class ManagerDAO {
         this.object_id = obj_id;
         return  getQueryList();
     }
+
+    public List<Object> getObjectByCondition(String whereCondition)
+    {
+        Sess = factory.openSession();
+        Query query = Sess.createQuery(getSQLQueryByCondition(whereCondition));
+        List<Object> list = query.list();
+        Sess.close();
+        return list;
+    }
+
+    public void closeFactory()
+    {
+        factory.close();
+    }
+    protected abstract String getSQLQueryByCondition(String cond);
+
+    protected abstract  boolean isReadOnly(Object obj);
 
     protected abstract String getSQLQuery();
 

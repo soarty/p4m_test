@@ -1,8 +1,6 @@
 package p4m.loader.ManagerDAO;
 
-import p4m.loader.D2Tables.D2Match;
 import p4m.loader.D2Tables.D2StatsDaily;
-import p4m.loader.JsonPack.JsonHeroPack.JsonMatch.Matches;
 import p4m.loader.JsonPack.JsonHeroPack.JsonMatchDetail.Players;
 import p4m.loader.WebDAO.WebMatchDetailDAO;
 
@@ -11,6 +9,16 @@ import p4m.loader.WebDAO.WebMatchDetailDAO;
  */
 public class ManagerStatsDailyDAO extends ManagerDAO {
     ManagerUserDailyDAO userDaily = new ManagerUserDailyDAO();
+
+    @Override
+    protected String getSQLQueryByCondition(String cond) {
+        return null;
+    }
+
+    @Override
+    protected boolean isReadOnly(Object obj) {
+        return false;
+    }
 
     @Override
     protected String getSQLQuery() {

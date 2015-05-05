@@ -5,6 +5,16 @@ package p4m.loader.ManagerDAO;
  */
 public class ManagerUserDAO extends ManagerDAO {
     @Override
+    protected String getSQLQueryByCondition(String cond) {
+        return null;
+    }
+
+    @Override
+    protected boolean isReadOnly(Object obj) {
+        return false;
+    }
+
+    @Override
     protected String getSQLQuery() {
         return "from D2User";
     }

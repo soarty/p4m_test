@@ -12,6 +12,16 @@ public class ManagerHeroDAO extends ManagerDAO
 {
 
     @Override
+    protected String getSQLQueryByCondition(String cond) {
+        return null;
+    }
+
+    @Override
+    protected boolean isReadOnly(Object obj) {
+        return false;
+    }
+
+    @Override
     protected String getSQLQuery() {
         return null;
     }

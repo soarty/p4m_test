@@ -1,10 +1,6 @@
 package p4m.loader.D2Tables;
 
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -30,7 +26,7 @@ public class D2Match {
     private Date dt;
 
     @Column(name = "loaded")
-    private char loaded;
+    private String loaded = "N";
 
     public D2Match()
     {}
@@ -76,8 +72,12 @@ public class D2Match {
     {
         return this.lobby_type;
     }
-    public char GetLoaded(){return this.loaded;}
-    public void SetLoaded(char inLoaded){
+    public String GetLoaded(){return this.loaded;}
+    public void SetLoaded(String inLoaded){
         this.loaded = inLoaded;
+    }
+    public String toString()
+    {
+        return "Match Id = '"+this.match_id+"'";
     }
 }

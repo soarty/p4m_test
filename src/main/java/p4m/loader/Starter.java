@@ -3,25 +3,32 @@
  */
 package p4m.loader;
 
-import p4m.loader.D2Tables.D2Match;
-import p4m.loader.D2Tables.D2User;
-import p4m.loader.D2Tables.D2UserDaily;
-import p4m.loader.ManagerDAO.*;
-
+import p4m.loader.Timer.EventLoadHero;
+import p4m.loader.Timer.EventLoadMatch;
+import p4m.loader.Timer.EventLoadStatsDaily;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 public class Starter {
     public static void main(String[] args) throws Exception {
         Date dateStart = new Date();
         System.out.println(dateStart.toString());
 
-        ManagerHeroDAO heroManger = new ManagerHeroDAO();
-        heroManger.saveOrUpdateArray();
-        System.out.println("p4m.hero loaded");
+        EventLoadHero heroLoader = new EventLoadHero();
+        heroLoader.setRepeatTime(3600000);
+        heroLoader.start();
 
-        ManagerUserDAO userManager = new ManagerUserDAO();
+        EventLoadMatch matchLoader = new EventLoadMatch();
+        matchLoader.setRepeatTime(60000);
+        matchLoader.start();
+
+        EventLoadStatsDaily dailyStatsLoader = new EventLoadStatsDaily();
+        dailyStatsLoader.setRepeatTime(60000);
+        dailyStatsLoader.start();
+        /*ManagerHeroDAO heroManger = new ManagerHeroDAO();
+        heroManger.saveOrUpdateArray();
+        System.out.println("p4m.hero loaded");*/
+
+        /*ManagerUserDAO userManager = new ManagerUserDAO();
         List<Object> userList = userManager.getQueryList();
 
         D2User d2u;
@@ -35,16 +42,19 @@ public class Starter {
         D2Match d2m;
         ManagerStatsDailyDAO dailyDAO = new ManagerStatsDailyDAO();
         List<Object> matchList = matchManager.getQueryList();
-        for (Object match:matchList)
-        {
-            d2m = (D2Match)match;
+        for (Object match:matchList) {
+            d2m = (D2Match) match;
             dailyDAO.saveOrUpdateArray(d2m.GetMatchId());
-            d2m.SetLoaded('Y');
+            d2m.SetLoaded("Y");
             matchManager.saveOrUpdate(d2m);
         }
+        //heroManger.closeFactory();
 
         Date dateEnd = new Date();
         System.out.println(dateEnd.toString());
-        System.out.println("p4m.stats daily loaded");
+        System.out.println("p4m.stats daily loaded");*/
+
+        if(!heroLoader.isAlive() && !matchLoader.isAlive() && !dailyStatsLoader.isAlive())
+            System.exit(0);
     }
 }
