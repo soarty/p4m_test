@@ -5,6 +5,11 @@ package p4m.loader.ManagerDAO;
  */
 public class ManagerUserDAO extends ManagerDAO {
     @Override
+    protected void saveOrUpdateArray(Object[] array) throws Exception {
+
+    }
+
+    @Override
     protected String getSQLQueryByCondition(String cond) {
         return null;
     }

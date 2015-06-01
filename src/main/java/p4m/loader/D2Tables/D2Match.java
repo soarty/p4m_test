@@ -51,6 +51,7 @@ public class D2Match {
     public  void SetStartTime(String st)
     {
         this.start_time = st;
+        this.dt = new Date(Long.parseLong(st)*1000);
     }
     public void SetLobbyType(int lt)
     {
@@ -79,5 +80,13 @@ public class D2Match {
     public String toString()
     {
         return "Match Id = '"+this.match_id+"'";
+    }
+    public void setDt()
+    {
+        this.dt = new Date((Long.parseLong(this.start_time)*1000));
+    }
+    public Date getDt()
+    {
+        return this.dt;
     }
 }

@@ -22,15 +22,18 @@ public class EventLoadStatsDaily extends EventTimer{
                 for (Object match:matchList) {
                     d2m = (D2Match) match;
                     try {
-                        dailyDAO.saveOrUpdateArray(d2m.GetMatchId());
+                        Object[] arrayIn = new Object[2];
+                        arrayIn[0] = d2m.GetMatchId();
+                        arrayIn[1] = d2m.getDt();
+                        dailyDAO.saveOrUpdateArray(arrayIn);
+                        d2m.SetLoaded("Y");
+                        matchManager.saveOrUpdate(d2m);
                     }
                     catch (Exception ex)
                     {
                         System.err.println("Ошибка загрузки результатов матчей");
                         ex.printStackTrace();
                     }
-                    d2m.SetLoaded("Y");
-                    matchManager.saveOrUpdate(d2m);
                 }
                 printDate("Окончание загрузки результатов матчей");
                 matchManager = null;

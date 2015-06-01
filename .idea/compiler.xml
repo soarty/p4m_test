@@ -22,8 +22,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
+        <module name="p4m" />
         <module name="p4m test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="p4m" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>

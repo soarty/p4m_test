@@ -1,15 +1,22 @@
 package p4m.loader.ManagerDAO;
 
 import p4m.loader.D2Tables.D2Match;
+import p4m.loader.D2Tables.D2UserDaily;
 import p4m.loader.JsonPack.JsonHeroPack.JsonMatch.Matches;
 import p4m.loader.WebDAO.WebMatchDAO;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by soart on 09.04.2015.
  */
 public class ManagerMatchDAO extends ManagerDAO {
+    @Override
+    protected void saveOrUpdateArray(Object[] array) throws Exception {
+
+    }
+
     @Override
     protected String getSQLQueryByCondition(String cond) {
         return "from D2Match "+cond;
@@ -40,7 +47,15 @@ public class ManagerMatchDAO extends ManagerDAO {
         int i = 0;
         for(Matches jsonher: (Matches[])objarr)
         {
-            d2m[i] = jsonher.toD2Match();
+            ManagerUserDailyDAO managerUserDailyDAO = new ManagerUserDailyDAO();
+            List<D2UserDaily> udlist = managerUserDailyDAO.getQuerySQL("from D2UserDaily where user.steam_id = '" + super.object_id + "' order by registerOn", D2UserDaily.class);
+            Date regDate = udlist.get(0).getRegisterOn();
+            Date matchDate = new Date(Long.parseLong(jsonher.getStart_time())*1000);
+            managerUserDailyDAO = null;
+            System.gc();
+            if(jsonher.getLobby_type() == 7 && matchDate.after(regDate)) {
+                d2m[i] = jsonher.toD2Match();
+            }
             i++;
         }
         return d2m;

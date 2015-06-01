@@ -9,8 +9,6 @@ import java.util.Date;
 @Entity
 @Table(name = "d2_users_daily")
 public class D2UserDaily{
-
-
     @Id
     @Column(name = "account_id")
     private String account_id;

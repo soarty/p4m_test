@@ -55,6 +55,17 @@ public class D2StatsDaily {
         return this.statsId.getMatch_id();
     }
 
+    @Column(name = "id")
+    private String id;
+    public void setId(String in_id)
+    {this.id = in_id;}
+    public String getId()
+    {return this.id;}
+    public void setId()
+    {
+        this.id = this.getAccount_id()+ "_" + this.getMatch_id();
+    }
+
     @Column(name = "player_slot")
     private int player_slot;
     public void setPlayer_slot(int inPL)

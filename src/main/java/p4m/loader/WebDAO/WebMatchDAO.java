@@ -16,7 +16,7 @@ import java.net.URL;
 public class WebMatchDAO extends WebDAO {
     @Override
     protected URL getURL() throws MalformedURLException {
-        String url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key="+key+"&account_id="+super.obj_id+"&min_players=10";
+        String url = "https://api.steampowered.com/IDOTA2Match_570/GetMatchHistory/V001/?key="+key+"&account_id="+super.obj_id+"&min_players=10&";
         URL webObject = new URL(url);
         return webObject;
 

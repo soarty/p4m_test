@@ -2,8 +2,10 @@ package p4m.loader.ManagerDAO;
 
 import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
+import org.omg.CORBA.*;
 import p4m.loader.D2Tables.*;
 
+import java.lang.Object;
 import java.util.List;
 
 /**
@@ -19,7 +21,8 @@ public abstract class ManagerDAO {
         cfg.addAnnotatedClass(D2Match.class);
         cfg.addAnnotatedClass(D2StatsDaily.class);
         cfg.addAnnotatedClass(D2UserDaily.class);
-        cfg.setProperty("hibernate.connection.url",System.getenv("p4m.url"));
+        cfg.addAnnotatedClass(D2StatsTournament.class);
+        cfg.setProperty("hibernate.connection.url", System.getenv("p4m.url"));
         cfg.setProperty("hibernate.connection.password",System.getenv("p4m.password"));
         cfg.setProperty("hibernate.connection.username",System.getenv("p4m.username"));
         factory = cfg.configure().buildSessionFactory();
@@ -57,7 +60,7 @@ public abstract class ManagerDAO {
                 saveOrUpdate(obj);
             }
             else
-                System.err.println("saveOrUpdate не вызван так как obj = null");
+                System.err.println("saveOrUpdate не вызван. Web запрос не вернул объектов, obj = null. Для класса = "+this.getClass());
         }
 
     }
@@ -66,6 +69,8 @@ public abstract class ManagerDAO {
         this.object_id = obj_id;
         saveOrUpdateArray();
     }
+
+    protected abstract void saveOrUpdateArray(Object[] array) throws Exception;
 
     public java.util.List<Object> getQueryList()
     {
@@ -90,6 +95,15 @@ public abstract class ManagerDAO {
         return list;
     }
 
+    public <T> List<T> getQuerySQL(String queryString, Class<T> inClass)
+    {
+        Sess = factory.openSession();
+        Query query = Sess.createQuery(queryString);
+        List<T> list = query.list();
+        Sess.close();
+        return list;
+    }
+
     public void closeFactory()
     {
         factory.close();
@@ -104,3 +118,4 @@ public abstract class ManagerDAO {
 
     protected abstract Object[] getWeb() throws Exception;
 }
+
