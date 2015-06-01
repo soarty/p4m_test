@@ -257,8 +257,8 @@
       <file leaf-file-name="ManagerDAO.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/p4m/loader/ManagerDAO/ManagerDAO.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7766498">
-              <caret line="33" column="42" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
+            <state vertical-scroll-proportion="0.5752961">
+              <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
               <folding>
                 <element signature="imports" expanded="false" />
               </folding>
@@ -1200,8 +1200,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/p4m/loader/ManagerDAO/ManagerDAO.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7766498">
-          <caret line="33" column="42" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
+        <state vertical-scroll-proportion="0.5752961">
+          <caret line="26" column="20" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="false" />
           </folding>
