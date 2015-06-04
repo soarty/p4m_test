@@ -45,6 +45,7 @@ public class ManagerStatsDailyDAO extends ManagerDAO {
 
         D2StatsDaily[] d2StatsDaily = new D2StatsDaily[objarr.length];
         int i = 0;
+        System.out.println(super.object_id);
         for (Players players: (Players[])objarr)
         {
             String queryString = "from D2UserDaily where account_id = '"+players.getAccount_id()
@@ -54,8 +55,8 @@ public class ManagerStatsDailyDAO extends ManagerDAO {
             List<D2UserDaily> uList = userDaily.getQuerySQL(queryString, D2UserDaily.class);
             if(uList.size()>0 && players.getLeaver_status().equals("0")) {
                 d2StatsDaily[i] = players.toD2StatsDaily();
+                d2StatsDaily[i].setStart_date_match(startDate);
                 d2StatsDaily[i].setMatch_id(super.object_id);
-                d2StatsDaily[i].setId();
 
                 for(D2UserDaily d2u:uList)
                 {
@@ -63,11 +64,13 @@ public class ManagerStatsDailyDAO extends ManagerDAO {
                 }
                 i++;
             }
-            /*else
+            else
             {
-                createUser(players.getAccount_id());
-                createUserDaily(players.getAccount_id());
-            }*/
+                if(!players.getAccount_id().toString().equals("4294967295")) {
+                    createUser(players.getAccount_id());
+                    createUserDaily(players.getAccount_id());
+                }
+            }
             userDaily = null;
             System.gc();
         }
@@ -129,6 +132,7 @@ public class ManagerStatsDailyDAO extends ManagerDAO {
 
         ManagerStatsTournamentDAO managerSTDAO = new ManagerStatsTournamentDAO();
         managerSTDAO.saveOrUpdate(d2StatsTournament);
+        System.out.println(d2StatsTournament.getId());
         managerSTDAO = null;
         System.gc();
     }

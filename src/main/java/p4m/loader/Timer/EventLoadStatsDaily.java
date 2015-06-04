@@ -31,6 +31,8 @@ public class EventLoadStatsDaily extends EventTimer{
                     }
                     catch (Exception ex)
                     {
+                        d2m.SetLoaded("Y");
+                        matchManager.saveOrUpdate(d2m);
                         System.err.println("Ошибка загрузки результатов матчей");
                         ex.printStackTrace();
                     }

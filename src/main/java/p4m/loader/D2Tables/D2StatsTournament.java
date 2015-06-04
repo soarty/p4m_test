@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "d2_stats_tournaments")
 public class D2StatsTournament {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", unique = true)
     private String id;
 
     public void setId()

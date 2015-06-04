@@ -1,6 +1,7 @@
 package p4m.loader.D2Tables;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * Created by soart on 15.04.2015.
@@ -21,7 +22,7 @@ public class D2StatsDaily {
         return this.Id;
     }*/
 
-    @EmbeddedId
+    /*@EmbeddedId
     D2StatsDailyId statsId;
     public void setPrimaryKey(D2StatsDailyId primaryKey)
     {
@@ -40,6 +41,7 @@ public class D2StatsDaily {
     public void setAccount_id(String inAcc_id)
     {
         this.statsId.setAccount_id(inAcc_id);
+        this.id = this.statsId.getAccount_id()+"_"+this.statsId.getMatch_id();
     }
     public String getAccount_id()
     {
@@ -49,22 +51,56 @@ public class D2StatsDaily {
     public void setMatch_id(String inMatch_id)
     {
         this.statsId.setMatch_id(inMatch_id);
+        this.id = this.statsId.getAccount_id()+"_"+this.statsId.getMatch_id();
     }
     public String getMatch_id()
     {
         return this.statsId.getMatch_id();
-    }
-
-    @Column(name = "id")
+    }*/
+    @Id
+    @Column(name = "id", unique = true)
     private String id;
     public void setId(String in_id)
     {this.id = in_id;}
     public String getId()
     {return this.id;}
-    public void setId()
+    /*public void setId()
     {
         this.id = this.getAccount_id()+ "_" + this.getMatch_id();
+    }*/
+
+    @Column(name = "match_id")
+    private String match_id;
+    public void setMatch_id(String inMatchId)
+    {
+        this.match_id = inMatchId;
+        this.id = this.account_id+"_"+this.match_id;
     }
+    public String getMatch_id()
+    {
+        return this.match_id;
+    }
+
+    @Column(name = "account_id")
+    private String account_id;
+    public void setAccount_id(String inAccId)
+    {
+        this.account_id = inAccId;
+        this.id = this.account_id+"_"+this.match_id;
+    }
+    public String getAccount_id()
+    {
+        return this.account_id;
+    }
+
+    @Column(name = "start_date_match")
+    private Date start_date_match;
+    public void setStart_date_match(Date date)
+    {
+        this.start_date_match = date;
+    }
+    public Date getStart_date_match()
+    {return this.start_date_match;}
 
     @Column(name = "player_slot")
     private int player_slot;
@@ -307,4 +343,17 @@ public class D2StatsDaily {
     {
         return this.level;
     }
+
+    @ManyToOne()
+    @JoinColumn(name = "match_id",referencedColumnName = "match_id",insertable = false,updatable = false)
+    private D2Match d2m;
+    public void setD2m(D2Match inD2m)
+    {
+        this.d2m = inD2m;
+    }
+    public D2Match getD2m()
+    {
+        return this.d2m;
+    }
+
 }
